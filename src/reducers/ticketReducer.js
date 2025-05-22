@@ -21,6 +21,16 @@ export default function ticketReducer(state, action) {
           ticket.id === action.payload.id ? action.payload : ticket
         ),
       };
+    case "SET_EDITING_TICKET":
+      return {
+        ...state,
+        editingTicket: action.payload,
+      };
+    case "CLEAR_EDITING_TICKET":
+      return {
+        ...state,
+        editingTicket: null,
+      };
     default:
       return state;
   }
