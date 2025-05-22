@@ -7,7 +7,7 @@ import ticketReducer from "./reducers/ticketReducer";
 import TicketList from "./components/TicketList";
 
 function App() {
-  const initialState = { tickets: [] };
+  const initialState = { tickets: [], editingTicket: null };
 
   // call dispatch to update the state
   const [state, dispatch] = useReducer(ticketReducer, initialState);
@@ -17,7 +17,7 @@ function App() {
     <div className="App">
       <div className="container">
         <h1>Bug Blaster</h1>
-        <TicketForm dispatch={dispatch} />
+        <TicketForm dispatch={dispatch} editingTicket={state.editingTicket} />
 
         {state.tickets.length > 0 && (
           <div>
