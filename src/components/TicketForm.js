@@ -1,3 +1,4 @@
+import { clear } from "@testing-library/user-event/dist/clear";
 import React, { useState, useEffect } from "react";
 
 export default function TicketForm({ dispatch, editingTicket }) {
@@ -46,6 +47,11 @@ export default function TicketForm({ dispatch, editingTicket }) {
     clearForm();
   };
 
+  const handleCancelEdit = () => {
+    dispatch({ type: "CLEAR_EDITING_TICKET" }); // Clear the editing ticket
+    clearForm();
+  };
+
   return (
     <form onSubmit={handleSubmit} className="ticket-form">
       <div>
@@ -84,6 +90,11 @@ export default function TicketForm({ dispatch, editingTicket }) {
       <button type="submit" className="button">
         Submit
       </button>
+      {editingTicket && (
+        <button type="button" className="button" onClick={handleCancelEdit}>
+          Cancel
+        </button>
+      )}
     </form>
   );
 }

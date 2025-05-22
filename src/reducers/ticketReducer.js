@@ -7,12 +7,23 @@ export default function ticketReducer(state, action) {
         tickets: [...state.tickets, action.payload], // describe the change to the state, add the new ticket at the end (payload)
       };
     case "DELETE_TICKET":
-      return {
-        ...state,
-        tickets: state.tickets.filter(
-          (ticket) => ticket.id !== action.payload.id
-        ),
-      };
+      if (state.editingTicket && state.editingTicket.id === action.payload.id) {
+        return {
+          ...state,
+          tickets: state.tickets.filter(
+            (ticket) => ticket.id !== action.payload.id
+          ),
+          editingTicket: null, // clear the editing ticket if it was deleted
+        };
+      } else {
+        return {
+          ...state,
+          tickets: state.tickets.filter(
+            (ticket) => ticket.id !== action.payload.id
+          ),
+        };
+      }
+
     case "UPDATE_TICKET":
       return {
         ...state,
@@ -20,6 +31,7 @@ export default function ticketReducer(state, action) {
         tickets: state.tickets.map((ticket) =>
           ticket.id === action.payload.id ? action.payload : ticket
         ),
+        editingTicket: null, // clear the editing ticket after updating
       };
     case "SET_EDITING_TICKET":
       return {
